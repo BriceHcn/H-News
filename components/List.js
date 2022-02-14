@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, FlatList, View,StyleSheet, Linking,Text } from 'react-native';
+import { ActivityIndicator, FlatList, View,StyleSheet, Linking } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import Article from './Article';
 

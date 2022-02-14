@@ -4,8 +4,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { View,StyleSheet,Text } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
-import GeneralScreen from './screens/General';
-import TestScreen from './screens/Health';
 import List from './components/List';
 
 const Drawer = createDrawerNavigator();
