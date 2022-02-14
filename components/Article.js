@@ -10,7 +10,7 @@ export default class Article extends React.Component {
     render() {
         return ( 
         <View style={styles.container}>
-            <Image source = {{ uri: this.props.article.urlToImage }}
+            <Image source = {{ uri: this.props.article.urlToImage == null ? "https://cdn.iconscout.com/icon/free/png-256/news-1661516-1410317.png" : this.props.article.urlToImage  }}
             style={styles.img}/> 
             <Text style={styles.text}>{this.props.article.title}, {this.props.article.author} </Text> 
         </View>
