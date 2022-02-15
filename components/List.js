@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, FlatList, View,StyleSheet, Linking } from 'react-native';
+import { ActivityIndicator, FlatList, View,StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import Article from './Article';
 
@@ -33,19 +33,6 @@ export default class List extends Component {
         this.getNewsFromApi();
     }
     
-    onArticlePressed(item){
-      Linking.canOpenURL(item.url).then(supported => {
-        if (supported) {
-          Linking.openURL(item.url);
-        } else {
-          console.log("Don't know how to open URI: " + this.props.url);
-        }
-      });
-    }
-
-    
-  
-
     render() {
         return ( 
         <View style = {styles.container}>
@@ -53,11 +40,11 @@ export default class List extends Component {
           <FlatList data = { this.state.data }
                     keyExtractor = {(item, index) => index.toString() }
                     renderItem = {({ item }) => (
-                      <TouchableOpacity onPress={() => this.onArticlePressed(item)}>
+                      //<TouchableOpacity onPress={() => this.onArticlePressed(item)}>
                         <View>
                           <Article article = { item }></Article>
                         </View>
-                      </TouchableOpacity>
+                      //</TouchableOpacity>
                     )}/>
           }
         </View>

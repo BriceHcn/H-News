@@ -12,7 +12,7 @@ expo start
 ```
 to build apk:
 ```bash
-eas build
+eas build -p android --profile preview
 ```
 
 ## Preview
