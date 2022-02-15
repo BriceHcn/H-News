@@ -16,9 +16,11 @@ eas build -p android --profile preview
 ```
 
 ## Preview
-![alt text](https://www.lebigdata.fr/wp-content/uploads/2021/03/DataLab_-_Chapitre_0_-_Fabriquer_sa_station_de_mesure_connect_e_github-logo-640x320-1.png)
+list of articles
+![alt text](https://user-images.githubusercontent.com/50581350/154051290-9847a30c-8486-446b-8bee-7c5a9202c6b1.jpg)
 
-![alt text](https://www.lebigdata.fr/wp-content/uploads/2021/03/DataLab_-_Chapitre_0_-_Fabriquer_sa_station_de_mesure_connect_e_github-logo-640x320-1.png)
+menu with different categories
+![alt text](https://user-images.githubusercontent.com/50581350/154051304-4531b325-31e9-4abb-9ceb-cb0714b7ce33.jpg)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
