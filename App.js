@@ -25,13 +25,16 @@ export default class App extends Component {
         <NavigationContainer>
           <Drawer.Navigator initialRouteName="General">
             {
+              //category drawer screen
               CatList.map((item) => {
                 return (
                   <Drawer.Screen key={item} category={item} name={item} component={List}/>
                   //TODO voir pourquoi category ne marche pas 
                 )
-            }) 
-            }
+            })
+          }
+            <Drawer.Screen key={"favorites"} name={"Favorites"} component={List}/>
+            
           </Drawer.Navigator>
         </NavigationContainer>
         </View>
