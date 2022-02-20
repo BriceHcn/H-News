@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
-import { View,StyleSheet,Text } from 'react-native';
+import { View,StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 import List from './components/List';
@@ -38,6 +38,7 @@ export default class App extends Component {
             
           </Drawer.Navigator>
         </NavigationContainer>
+        <StatusBar></StatusBar>
         </View>
         );
     }
