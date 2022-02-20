@@ -1,6 +1,7 @@
 # H-News
 
-H-News Is my first react native apps. It collect news from France and display it in Category. A click on a new open the web browser to read the new on the writer website.
+H-News Is my first react native apps. It collect news from France and display it in Category. A click on a new open the web browser to read the new online.
+You can add news to 'favorites' or to 'read later'
 
 ## Installation
 

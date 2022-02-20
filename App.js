@@ -28,13 +28,13 @@ export default class App extends Component {
               //category drawer screen
               CatList.map((item) => {
                 return (
-                  <Drawer.Screen key={item} category={item} name={item} component={List}/>
+                  <Drawer.Screen key={item} name={item} component={List} initialParams={{category : item }}/>
                   //TODO voir pourquoi category ne marche pas 
                 )
             })
           }
-            <Drawer.Screen key={"favorites"} name={"Favorites"} component={List}/>
-            <Drawer.Screen key={"later"} name={"For later"} component={List}/>
+            <Drawer.Screen key={"favorites"} name={"Favorites"} component={List} initialParams={{category : 'item' }}/>
+            <Drawer.Screen key={"later"} name={"For later"} component={List} initialParams={{category : 'item2'}}/>
             
           </Drawer.Navigator>
         </NavigationContainer>

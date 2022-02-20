@@ -1,97 +1,92 @@
-import React, { Component } from 'react';
+import React, { useEffect,useState } from 'react';
 import { ActivityIndicator, FlatList, View,StyleSheet } from 'react-native';
-import { TouchableOpacity } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Article from './Article';
 
-export default class List extends Component {
-    constructor(props) {
-        super(props);
+function List({ route, ...props }){
 
-        this.state = {
-            data: [],
-            isLoading: true
-        };
+  const [data,setData] = useState('');
+  const [isLoading,setIsLoading] = useState(false);
+
+//first load
+useEffect(()=>{
+       getData()   
+},[]);
+
+//when screen focused
+useFocusEffect(
+  React.useCallback(() => {
+    getData();
+  }, [])
+);
+
+//all my function used 
+    const getData = () =>{
+      if(route.name==="Favorites"){
+        getStorage("favorites");
+     }
+     else if(route.name==="For later"){
+       getStorage("later");
+     }
+     else{
+       getNewsFromApi(route.params.category);
+     }
     }
-    componentDidMount() {
-      this.focusListener = this.props.navigation.addListener('focus',
-       () => { 
-               if(this.props.route.name==="Favorites"){
-                 this.getStorage("favorites");
-              }
-              else if(this.props.route.name==="For later"){
-                this.getStorage("later");
-              }
-              else{
-                this.getNewsFromApi(this.props.route.name);
-              }
-       }
-     );
-    }
- 
 
-    
-
-    async getNewsFromApi(category) {
+    const getNewsFromApi = async (category) => {
         try {
             const response = await fetch('https://newsapi.org/v2/top-headlines?category='+category.toLowerCase()+'&country=fr&apiKey=c5362b90a1e54df5a3fc3f381ce21edc');
             const json = await response.json();
-            this.setState({ 
-              data: json.articles,
-              isLoading:true});
+            setData(json.articles);
+            setIsLoading(true);
         } catch (error) {
             console.log(error);
         } finally {
-            this.setState({ isLoading: false });
+            setIsLoading(false);
             
         }
     }
 
-    async getStorage(storage){
+const getStorage = async (storage) => {
         try {
           const value = await AsyncStorage.getItem(storage)
           if(value !== null){
-            this.setState({ 
-              data: JSON.parse(value),
-              isLoading:true});
+            setData(JSON.parse(value));
+            setIsLoading(true);
           }
-
       } catch (error) {
           console.log(error);
       } finally {
-          this.setState({ isLoading: false });
-          
+        setIsLoading(false); 
       }
-      }
-    
-
-    
-    render() {
-        return ( 
-        <View style = {styles.container}>
-          {this.state.isLoading ? <ActivityIndicator/> : 
-          <FlatList data = { this.state.data }
-                    keyExtractor = {(item, index) => index.toString() }
-                    renderItem = {({ item }) => (
-                      //<TouchableOpacity onPress={() => this.onArticlePressed(item)}>
-                        <View>
-                          <Article article = { item }></Article>
-                        </View>
-                      //</TouchableOpacity>
-                    )}/>
-          }
-        </View>
-        );
-    }
-};
+}
+  
 const styles = StyleSheet.create({
   container: { 
     flex: 1, paddingTop: 0, backgroundColor: '#FFFFFF',
   }
 });
 
+//rendered part
+return ( 
+  <View style = {styles.container}>
+    {
+    isLoading ? <ActivityIndicator/> : 
+    <FlatList data = { data }
+              keyExtractor = {(item, index) => index.toString() }
+              renderItem = {({ item }) => (
+                  <View>
+                    <Article article = { item }></Article>
+                  </View>
+              )}/>
+    }
+  </View>
+  );
+}
+export default List;
 
 
 
