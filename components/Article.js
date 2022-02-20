@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text, View, Image, StyleSheet, Linking } from 'react-native';
-import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
+import {  StyleSheet, Linking,ToastAndroid } from 'react-native';
+import { Button, Card, Paragraph } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 export default class Article extends React.Component {
     constructor(props) {
@@ -18,23 +18,37 @@ export default class Article extends React.Component {
         });
       }
 
+      articleInTab(tab){
+        let a=false
+        tab.forEach(element => {
+          if(element.title === this.props.article.title){
+            a=true
+          }
+        });
+        return a;
+      }
     
-      async addFavorite(){
+      async addtoStorage(storage){
         //storing data
         try {
-          const value =await AsyncStorage.getItem('favorites')
+          const value =await AsyncStorage.getItem(storage)
           //deja des elements
           if(value!=null){
             let tab = JSON.parse(value)
-            let set = new Set(tab)
-            set.add(this.props.article)
-            await AsyncStorage.setItem('favorites', JSON.stringify(Array.from(set)))
+
+            //si tableau contient déja l'article
+            if(this.articleInTab(tab)){
+              ToastAndroid.show('déja ajouté !', ToastAndroid.SHORT);
+            }else{
+              
+              tab.unshift(this.props.article)
+              await AsyncStorage.setItem(storage, JSON.stringify(tab))
+            }
           }
           //pas encore d'elements
           else{
-            let set = new Set()
-            set.add(this.props.article)
-            await AsyncStorage.setItem('favorites', JSON.stringify(Array.from(set)))
+            let tab = [this.props.article]
+            await AsyncStorage.setItem(storage, JSON.stringify(tab))
           }
         } catch (e) {
           alert(e)
@@ -53,8 +67,9 @@ export default class Article extends React.Component {
         <Card.Cover source={{ uri: this.props.article.urlToImage == null ? "https://cdn.iconscout.com/icon/free/png-256/news-1661516-1410317.png" : this.props.article.urlToImage }} />
         <Paragraph>{this.props.article.title}</Paragraph>
         <Card.Actions styles={styles.cardActions}>
-            <Button onPress={() => this.viewWebPressed(this.props.article.url)}>Voir en ligne</Button>
-            <Button onPress={() => this.addFavorite()}>Ajouter au favoris</Button>
+            <Button onPress={() => this.viewWebPressed(this.props.article.url)}>Voir +</Button>
+            <Button onPress={() => this.addtoStorage('favorites')}>Ajouter au favoris</Button>
+            <Button onPress={() => this.addtoStorage('later')}>Lire plus tard</Button>
         </Card.Actions>
   </Card>      
         );

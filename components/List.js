@@ -18,10 +18,13 @@ export default class List extends Component {
     componentDidMount() {
       this.focusListener = this.props.navigation.addListener('focus',
        () => { 
-               //alert('focus is called'); 
                if(this.props.route.name==="Favorites"){
-                 this.getFavorites();
-              }else{
+                 this.getStorage("favorites");
+              }
+              else if(this.props.route.name==="For later"){
+                this.getStorage("later");
+              }
+              else{
                 this.getNewsFromApi(this.props.route.name);
               }
        }
@@ -46,9 +49,9 @@ export default class List extends Component {
         }
     }
 
-    async getFavorites(){
+    async getStorage(storage){
         try {
-          const value = await AsyncStorage.getItem('favorites')
+          const value = await AsyncStorage.getItem(storage)
           if(value !== null){
             this.setState({ 
               data: JSON.parse(value),

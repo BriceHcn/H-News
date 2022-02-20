@@ -34,6 +34,7 @@ export default class App extends Component {
             })
           }
             <Drawer.Screen key={"favorites"} name={"Favorites"} component={List}/>
+            <Drawer.Screen key={"later"} name={"For later"} component={List}/>
             
           </Drawer.Navigator>
         </NavigationContainer>
